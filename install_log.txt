@@ -1,0 +1,25 @@
+conda install:
+ffmpeg
+imageio
+matplotlib
+numpy
+pandas
+Pillow
+pytorch
+PyYAML
+scikit-image
+scikit-learn
+scipy
+tqdm
+
+manually install:
+conda install -n bakamitai -c pytorch torchvision 
+conda install -n bakamitai -c conda-forge imageio-ffmpeg
+
+Dockerfile:
+RUN conda create -n bakamitai python=3.6.8 && \
+conda install -n bakamitai ffmpeg imageio matplotlib numpy pandas Pillow pytorch PyYAML scikit-image scikit-learn scipy tqdm && \
+conda install -n bakamitai -c pytorch torchvision && \
+conda install -n bakamitai -c conda-forge imageio-ffmpeg
+
+^ Works for running with cpu. Haven't tested GPU yet

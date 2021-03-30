@@ -1,0 +1,12 @@
+/.vscode
+__pycache__
+envs/
+data/checkpoints/*
+input/*
+output/*
+temp/*
+
+!data/checkpoints/.gitkeep
+!input/.gitkeep
+!output/.gitkeep
+!temp/.gitkeep

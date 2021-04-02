@@ -146,7 +146,7 @@ Everything is good. Nice.
 
 Need to make environment.yml file for docker... when final version is done. until then, I will keep package intallation history in an install log.
 
-# 3/26/2021
+## 3/26/2021
 TODO
 - Play with ECS. 
 - Deploy container to ECS
@@ -168,7 +168,7 @@ To look up:
 - "overlays". Do I need to create a custom cft and specify it to get a GPU based EC2?
 - Local simulation `docker context create ecs --local-simulation ecsLocal`. Facilitates dev and debug if code integrates with other AWS services.
 
-# 3/27/2021
+## 3/27/2021
 continued
 
 docker compose up 
@@ -195,11 +195,97 @@ Figure out how to tell compose to build image locally using Dockerfile.
 Else, use Amazon ECR and store image there.
 
 TODO
-- use git-LFS
+- use git-LFSs
 - put image on ECR
 
-# 3/29/2021
+## 3/29/2021
 Forget git-LFS.
 Using google drive folder with ADD command in Dockerfile to fetch the tar files.
 Better. 
 Also moving to new repository, so I don't have to undo git-LFS and stuff in this one.
+
+## 3/30/2021
+push to ECR from cli.
+Authenticate docker to default registry:
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 073860560971.dkr.ecr.us-east-1.amazonaws.com
+
+Login success
+
+create a repository:
+aws ecr create-repository \
+    --repository-name bakamitai \
+    --image-scanning-configuration scanOnPush=true \
+    --region us-east-1
+
+output:
+{
+    "repository": {
+        "repositoryArn": "arn:aws:ecr:us-east-1:073860560971:repository/bakamitai",
+        "registryId": "073860560971",
+        "repositoryName": "bakamitai",
+        "repositoryUri": "073860560971.dkr.ecr.us-east-1.amazonaws.com/bakamitai",
+        "createdAt": "2021-03-30T20:13:58-04:00",
+        "imageTagMutability": "MUTABLE",
+        "imageScanningConfiguration": {
+            "scanOnPush": true
+        },
+        "encryptionConfiguration": {
+            "encryptionType": "AES256"
+        }
+    }
+}
+
+Tag and push
+docker tag test2:latest 073860560971.dkr.ecr.us-east-1.amazonaws.com/bakamitai:latest
+docker push 073860560971.dkr.ecr.us-east-1.amazonaws.com/bakamitai:latest
+
+## 3/31/2021
+TODO
+- Deploy to ECS
+- ssh and run code
+
+TIL MiB means mebibyte or 1,048,576 bytes
+
+ECS notes:
+- Tasks are the unit of deployment. Contains one or more containers. 
+- We don't run containers, we run tasks
+- Fargate: 
+  - charged whenever a task is run
+  - each task run on its own stack of resources. Dopesn't share underlying kernel, cpu, mem (for ex) with other tasks
+- EC2: 
+  - we own and manage EC2s. charged for EC2 uptime and usage
+  - each task can run on the same EC2. Doesn't can share underlying kernel, cpu, mem (for ex) with other tasks
+- In both, containers share resources with other containers inside the same task... presumably
+
+
+ECS
+Container definition:
+Container name: test
+Image: 073860560971.dkr.ecr.us-east-1.amazonaws.com/bakamitai
+
+Advanced container configuration/Environment
+- GPUs: 1 
+- Working directory: /app
+
+Task definition:
+Task definition name: test-task
+Task memory: 16GB
+Task CPU: 2 vCPU
+
+Service definition:
+default, no load balancer
+
+... is there way to docker run -i -t into a task's container?
+[running -it on ecs container](https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/)
+
+[using gpu ec2s on ecs](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-gpu.html)
+
+## 4/2/2021
+I think right now... I will focus on getting a local cpu release out. Do GPU, web server stuff later.
+
+TODO:
+- refactor code
+- create environment files for local cpu usage for windows, mac, docker
+- write first blog about solving dependency hell with conda
+
+ 

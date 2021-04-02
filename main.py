@@ -11,19 +11,22 @@ from animate import normalize_kp
 from tqdm import tqdm
 
 from demo import load_checkpoints
+from add_music import add_music
 
 def permutate(im):
     # Convert the image (256,256,3) to the familiar [1,3,256,256] format
     return torch.tensor(im[np.newaxis].astype(np.float32)).permute(0, 3, 1, 2)
 
 
-image_path = './input/sample_images/3-Joe.jpg'
+image_path = './input/sample_images/2-Andrew.jpg'
 video_path = './input/bakamitai_template.mp4'
-out_video_path = './temp/baka_mitai_no_sound.mp4'
+temp_out_path = './temp/baka_mitai_no_sound.mp4'
+music_path = './input/bakamitai_sound_clip.mp3'
+final_out_path = './output/output.mp4'
 cpu = True
 
 source_image = imageio.imread(image_path)
-# Should fix memory error by feeding frame by frame opposed too whole video at once
+# Should fix memory error by feeding frame by frame opposed to whole video at once
 driving_video = imageio.get_reader(video_path)
 
 # Resize image to 256x256
@@ -39,7 +42,7 @@ generator, kp_detector = load_checkpoints(config_path='config/vox-adv-256.yaml',
                                           cpu=cpu)
 
 # Create Video Writer for output
-writer = imageio.get_writer(out_video_path, fps=fps)
+writer = imageio.get_writer(temp_out_path, fps=fps)
 
 
 with torch.no_grad():
@@ -84,3 +87,6 @@ with torch.no_grad():
             out['prediction'].data.cpu().numpy(), [0, 2, 3, 1])[0]
         writer.append_data(img_as_ubyte(pred))
     writer.close()
+
+# Add music to video
+add_music(src=temp_out_path, dest=final_out_path, music=music_path)

@@ -2,7 +2,7 @@
 __pycache__
 envs/
 data/checkpoints/*
-input/*
+#input/*
 output/*
 temp/*
 

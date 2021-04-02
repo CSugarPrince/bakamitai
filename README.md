@@ -1,3 +1,4 @@
+
 # Dame Da Ne (Baka Mitai) App
 
 だめだね・ばかみたい
@@ -24,3 +25,8 @@ If you want to conveniently create a bakamitai video from your local machine, he
 5. After it's done processing, your video should show up in the output folder.
 
 ## Running the program using Docker (easier)
+docker build -t baka-image .
+docker run --name baka_container -i -t baka-image /bin/bash
+conda activate bakamitai
+python main.py
+docker cp baka_container:/app/output/output.mp4 ./output/d_output.mp4

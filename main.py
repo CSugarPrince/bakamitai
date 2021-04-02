@@ -18,7 +18,7 @@ def permutate(im):
     return torch.tensor(im[np.newaxis].astype(np.float32)).permute(0, 3, 1, 2)
 
 
-image_path = './input/sample_images/2-Andrew.jpg'
+image_path = './input/input.jpg'
 video_path = './input/bakamitai_template.mp4'
 temp_out_path = './temp/baka_mitai_no_sound.mp4'
 music_path = './input/bakamitai_sound_clip.mp3'

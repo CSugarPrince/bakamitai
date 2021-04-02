@@ -1,4 +1,4 @@
-name: bakamitai2
+name: bakamitai
 channels:
   - pytorch
   - conda-forge

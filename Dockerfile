@@ -31,9 +31,7 @@ conda install -n bakamitai -c conda-forge imageio-ffmpeg
 
 WORKDIR /app
 
-ADD https://drive.google.com/file/d/1G9MLhGANhc3gE85OvdeRBSIa8TFj8CuJ/view?usp=sharing ./data/checkpoints/vox-adv-cpk.pth.tar
-ADD https://drive.google.com/file/d/1ETVI7n_sNGFj4hL-EdRAh5yWnVV3m0T7/view?usp=sharing ./data/checkpoints/vox-cpk.pth.tar
-ADD https://drive.google.com/file/d/1SwzIl5cEPSExDhY2vjdY57KRoQxBxqaD/view?usp=sharing ./input/bakamitai_sound_clip.mp3
-ADD https://drive.google.com/file/d/1fhZxcyrctYOnB0TVhk_ivX_PyKnJ91pu/view?usp=sharing ./input/bakamitai_template.mp4
+ADD https://jhew-bakamitai.s3.amazonaws.com/data/checkpoints/vox-adv-cpk.pth.tar ./data/checkpoints/vox-adv-cpk.pth.tar
+ADD https://jhew-bakamitai.s3.amazonaws.com/data/checkpoints/vox-cpk.pth.tar ./data/checkpoints/vox-cpk.pth.tar
 
 COPY . .

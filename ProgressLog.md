@@ -288,4 +288,6 @@ TODO:
 - create environment files for local cpu usage for windows, mac, docker
 - write first blog about solving dependency hell with conda
 
- 
+Making the Win conda environment
+
+cd /d E:\Dev\bakamitai

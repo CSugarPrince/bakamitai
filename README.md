@@ -28,8 +28,8 @@ To prep your picture, you can use this [website](https://photoshop.adobe.com/)
 **Option 2: Run locally on your machine using Anaconda**
 1. Clone this repository
 2. Download two files and put them both in the "data/checkpoints/" folder
-  - 
-  -
+  - https://jhew-bakamitai.s3.amazonaws.com/data/checkpoints/vox-adv-cpk.pth.tar 
+  - https://jhew-bakamitai.s3.amazonaws.com/data/checkpoints/vox-cpk.pth.tar
 3. Install Anaconda ver 4.9.2 (or Miniconda 4.9.2)
 4. Create a conda environment by first activating the conda base environment, then running this command:
   - `conda env create -f conda_environments/mac_local.yml` for mac
